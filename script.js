@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function roundUpToNearestThousand(number) {
-  return Math.ceil(number / 1000) * 1000;
+  return Math.ceil(number / 10) * 10;
 }
 
 function formatNumber(number) {
@@ -42,10 +42,13 @@ function calculate() {
     okladCost = oklad/normHours*workedHours
   }
 
+var per = 0
+
 
 
   if(pererab > 0){
-perer =  roundUpToNearestThousand(oklad/normHours*pererab)
+perer =  oklad/normHours*pererab
+per = formatNumber(roundUpToNearestThousand(oklad/normHours))
   }
 
   if (medical > 0) {
@@ -57,9 +60,9 @@ perer =  roundUpToNearestThousand(oklad/normHours*pererab)
   }
 
   if (normHours >= workedHours) {
-    salaryCost = roundUpToNearestThousand(
+    salaryCost = 
       salary * KPI/normHours*workedHours/ 100
-    );
+    ;
   }
 
   if (medical > 0){
@@ -71,7 +74,9 @@ var  text1 = "Заполните все поля"
 var textColor = "black"
 
 if(workedHours >0 && normHours>0 && workedHours <= normHours){
- text1 = "Оклад: " + formatNumber(roundUpToNearestThousand(okladCost))
+ text1 = "Оклад: 100% - 3 308 880" +
+ "<br> Оклад по отработанным часам: " + formatNumber(okladCost)
+
 }
 if (workedHours > normHours){
   text1 = "Кол-во отработанных часов не может быть больше нормы, сверх нормы укажите в строке переработки"
@@ -85,20 +90,20 @@ var salaryTotal = okladCost + perer + medCompensatition + salaryCost
 
   var resultsText = text1 ;
 
-  var resultsText2 = "Заполните поля"
+  var resultsText2 =  "<br> Сумма переработки за 1 час: " + per 
   +"<br>" + "Больничные: " + formatNumber(roundUpToNearestThousand(medCompensatition)) + 
   "<br> Переработки: " + formatNumber(roundUpToNearestThousand(perer));
 
-  var resultsText3 = "Заполните поля" +
+  var resultsText3 = "При отработке нормы часов и выполнения KPI на 100%: 2 202 200" +
    "<br>" + "Выполнение KPI: " + toPercentage(KPI/100) 
   +"<br>" + "Сумма бонусов: " + formatNumber(roundUpToNearestThousand(salaryCost));
 
-  var totalText = text1 +
+  var totalText = "Оклад по отработанным часам: " + formatNumber(okladCost) +
   "<br> Переработки: " + formatNumber(roundUpToNearestThousand(perer)) +
   "<br> KPI: " + formatNumber(roundUpToNearestThousand(salaryCost)) +
   "<br> Больничные: " + formatNumber(roundUpToNearestThousand(medCompensatition)) +
   "<br> Всего аванс (25-ое число): " +
-  formatNumber(roundUpToNearestThousand(avans)) +
+  formatNumber(avans) +
   "<br>" +
   "Заработная плата 10-ое число: " +
   formatNumber(roundUpToNearestThousand(zarplata)) +
